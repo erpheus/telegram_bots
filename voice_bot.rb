@@ -1,6 +1,5 @@
 require 'telegrammer'
-require 'net/http'
-require "ogginfo"
+require 'ogginfo'
 
 def createdir()
   `mkdir -p /tmp/bieenbot/media`
