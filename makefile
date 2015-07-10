@@ -42,7 +42,7 @@ build: ffmpeg
 ffmpeg:
 	make ffmpeg-source
 	make opus
-	cd ffmpeg-source; PKG_CONFIG_PATH="$(ROOT_DIR)/ffmpeg-include/lib/pkgconfig" ./configure --prefix="$(ROOT_DIR)/ffmpeg-build" --extra-cflags="-I$(ROOT_DIR)/ffmpeg-include/include" --extra-ldflags="-L$(ROOT_DIR)/ffmpeg-include/lib" --bindir="$(ROOT_DIR)/" --cc=/usr/bin/clang --prefix=/opt/ffmpeg --as=yasm --extra-version=tessus  --enable-gpl --enable-libmp3lame --enable-libopus --disable-libvo-aacenc --enable-libvorbis --disable-ffplay --disable-indev=qtkit --disable-indev=x11grab_xcb
+	cd ffmpeg-source; PKG_CONFIG_PATH="$(ROOT_DIR)/ffmpeg-include/lib/pkgconfig" ./configure --prefix="$(ROOT_DIR)/ffmpeg-build" --extra-cflags="-I$(ROOT_DIR)/ffmpeg-include/include" --extra-ldflags="-L$(ROOT_DIR)/ffmpeg-include/lib" --bindir="$(ROOT_DIR)/" --prefix=/opt/ffmpeg --as=yasm --extra-version=tessus  --enable-gpl --enable-libmp3lame --enable-libopus --disable-libvo-aacenc --enable-libvorbis --disable-ffplay --disable-indev=qtkit --disable-indev=x11grab_xcb
 	cd ffmpeg-source; make
 	cp ffmpeg-source/ffmpeg
 	rm -rf ffmpeg-source ffmpeg-include ffmpeg-build
