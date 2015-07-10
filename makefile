@@ -1,10 +1,10 @@
 ROOT_DIR:=$(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
 
 
-CONTROLLER="ruby bots_controller.rb"
+CONTROLLER=ruby bots_controller.rb
 
 
-.PHONY: stop start restart clean build
+.PHONY: stop start restart clean build opus
 
 all: stop clean build start
 
@@ -12,7 +12,7 @@ all: stop clean build start
 # MAKEFILE COMMANDS
 
 clean:
-	rm temp
+	rm -f temp
 	rm -rf ffmpeg-source ffmpeg-include ffmpeg-build
 
 force-clean: clean
@@ -21,7 +21,7 @@ force-clean: clean
 
 stop:
 	$(CONTROLLER) stop
-	rm *.pid
+	rm -f *.pid
 
 start:
 	$(CONTROLLER) start
@@ -39,7 +39,9 @@ build: ffmpeg
 
 # TARGETS
 
-ffmpeg: ffmpeg-source opus
+ffmpeg:
+	make ffmpeg-source
+	make opus
 	cd ffmpeg-source; PKG_CONFIG_PATH="$(ROOT_DIR)/ffmpeg-include/lib/pkgconfig" ./configure --prefix="$(ROOT_DIR)/ffmpeg-build" --extra-cflags="-I$(ROOT_DIR)/ffmpeg-include/include" --extra-ldflags="-L$(ROOT_DIR)/ffmpeg-include/lib" --bindir="$(ROOT_DIR)/" --cc=/usr/bin/clang --prefix=/opt/ffmpeg --as=yasm --extra-version=tessus  --enable-gpl --enable-libmp3lame --enable-libopus --disable-libvo-aacenc --enable-libvorbis --disable-ffplay --disable-indev=qtkit --disable-indev=x11grab_xcb
 	cd ffmpeg-source; make
 	cp ffmpeg-source/ffmpeg
